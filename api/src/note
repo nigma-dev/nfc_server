@@ -1,0 +1,117 @@
+    Routes
+    @request_method POST
+/*====================================================================================================*/
+
+user register {@param 
+    [username]
+    [card_id]
+    [address]
+    [date]
+    [phone_no]
+    [card_type]
+}
+-> @operation {
+    [+] check_validation {token,request_method,request_argument}
+    
+    if(valid){
+        makeUserRegister();
+    }
+
+
+}
+
+--------------------------------------------------------------------
+
+ip register { @param
+    [ip]  
+}
+-> @operation{
+    [+] check_validation{token,request_method,request_argument}
+    if(valid){
+        saveIP();
+    }
+}
+
+---------------------------------------------------------------------
+
+user { @param
+    [card_id]
+    return getUserInfo();
+
+}
+
+-> @operation{
+    [+] check_validation{token,request_method,request_argument}
+}
+
+-----------------------------------------------------------------------
+
+
+makeMoveRecord{
+
+}
+
+-----------------------------------------------------------------------
+
+getMovieRecord{
+
+}
+
+
+/*====================================================================================================*/
+
+
+
+   {Lib}
+/*====================================================================================================*/
+    validation{
+            check token
+            check argument
+            if(userTakeMovie){
+                check expire or not
+            }
+    }
+
+    getUserInfo($card_id){
+        return 
+        name,phone,card_id,card_type,
+        start_use_date,expire_date
+        total_movie,remain_movie;
+    }
+
+
+    makeUserRegister{
+        if(card_type=VIP){
+            [ copy the argument date and add 1 year add to expire date column ]
+        }else{
+            [ copy the argument date and add 1 month add to expire date column ]
+        }
+        saveUser();
+        makeUserMovieList();
+    }
+
+
+    saveUser($file_path,$_user_info){
+        write to csv file ;
+    }
+
+    makeUserMovieList($card_id){
+        
+    }
+
+    saveUserMovieList($file_path,$data[][]){
+
+    }
+
+    getUserMovieRecord(){
+
+    }
+
+    checkUserExist(){
+
+    }
+
+    saveIP(){
+
+    }
+/*====================================================================================================*/    
